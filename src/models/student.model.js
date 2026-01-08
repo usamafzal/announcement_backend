@@ -23,10 +23,12 @@ export const studentModel = ConfigDB.define(
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     isGraduated: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     isFeeCleared: {
       type: DataTypes.BOOLEAN,

@@ -13,6 +13,9 @@ export const semesterModel = ConfigDB.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      set(value) {
+        this.setDataValue("name", value.toUpperCase());
+      },
     },
     order: {
       type: DataTypes.INTEGER,
