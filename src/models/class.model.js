@@ -18,6 +18,10 @@ export const classModel = ConfigDB.define(
         this.setDataValue("name", value.toUpperCase());
       },
     },
+    programId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
   },
   {
     tableName: "classes",

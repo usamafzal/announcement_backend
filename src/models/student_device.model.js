@@ -1,8 +1,8 @@
 import ConfigDB from "../db/db.js";
 import { DataTypes } from "sequelize";
 
-export const programModel = ConfigDB.define(
-  "Programs",
+export const studentDevice = ConfigDB.define(
+  "StudentDevice",
   {
     id: {
       type: DataTypes.UUID,
@@ -10,18 +10,18 @@ export const programModel = ConfigDB.define(
       allowNull: false,
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
+    studentId: {
+      type: DataTypes.UUID,
       allowNull: false,
-      set(value) {
-        this.setDataValue("name", value.toUpperCase());
-      },
     },
-    durationSemesters: DataTypes.INTEGER,
+    fcmToken: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    platform: DataTypes.STRING,
   },
   {
-    tableName: "programs",
+    tableName: "student_device",
     timestamps: true,
   }
 );
