@@ -27,7 +27,6 @@ export const studentModel = ConfigDB.define(
     },
     isGraduated: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
       defaultValue: false,
     },
     isFeeCleared: {
