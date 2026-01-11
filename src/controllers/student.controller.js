@@ -4,6 +4,7 @@ import ApiResponse from "../utils/api_response/api_response.js";
 import {
   studentLoginValidation,
   StudentValidation,
+  updateStudentValidation,
 } from "../utils/validation/student_validate.js";
 import jwt from "jsonwebtoken";
 
@@ -40,13 +41,13 @@ const createStudent = async (req, res) => {
 
     const student = await studentModel.create({ name, userId, password });
 
-    const { password: _, ...remaining } = student;
+    const { password: _, ...remaining } = student.toJSON();
     const response = new ApiResponse(
       201,
       "Student created successfully",
       remaining
     );
-    return res.json(response.statusCode).json(response);
+    return res.status(response.statusCode).json(response);
   } catch (error) {
     throw new ApiError(500, `Failed to create Student: ${error.message}`);
   }
@@ -76,6 +77,22 @@ const loginStudent = async (req, res) => {
       return res.status(response.statusCode).json(response);
     }
 
+    if (!existStudent.isFeeCleared) {
+      const response = new ApiResponse(
+        403,
+        "Pay pending dues to unlock account"
+      );
+      return res.status(response.statusCode).json(response);
+    }
+
+    if (existStudent.isGraduated) {
+      const response = new ApiResponse(
+        403,
+        "Access denied. This account belongs to a graduated student."
+      );
+      return res.status(response.statusCode).json(response);
+    }
+
     const verifyPassword = await bcrypt.compare(
       password,
       existStudent.password
@@ -91,6 +108,12 @@ const loginStudent = async (req, res) => {
       process.env.JWT_STUDENT_SECRET
     );
 
+    res.cookie("studentToken", studentToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+
     const { password: _, ...remaining } = existStudent.toJSON();
 
     remaining.studentToken = studentToken;
@@ -100,7 +123,7 @@ const loginStudent = async (req, res) => {
       "Student logged in successfully",
       remaining
     );
-    return res.statusCode(response).json(response);
+    return res.status(response.statusCode).json(response);
   } catch (error) {
     throw new ApiError(500, `failed to logged in: ${error.message}`);
   }
@@ -109,28 +132,40 @@ const loginStudent = async (req, res) => {
 // update admin student record
 const updateStudent = async (req, res) => {
   try {
-    if (!req.body) {
-      const response = new ApiResponse(400, "invalid response");
+    const { id } = req.params;
+
+    const findStudent = await studentModel.findByPk(id);
+
+    if (!findStudent) {
+      const response = new ApiResponse(400, "student can't exist");
       return res.status(response.statusCode).json(response);
     }
 
-    const { id } = req.params;
-    const findStudent = await studentModel.findByPk(id);
-    if (!findStudent) {
-      const response = new ApiResponse(400, "student can't exist");
+    const validate = updateStudentValidation(req.body);
+
+    if (!validate.valid) {
+      const response = new ApiResponse(400, validate.message);
       return res.status(response.statusCode).json(response);
     }
     const { name, userId, password, isGraduated, isFeeCleared, isActive } =
       req.body;
 
-    await studentModel.update(
+    const [_, updated] = await studentModel.update(
       { name, userId, password, isGraduated, isFeeCleared, isActive },
       { where: { id: findStudent.id }, individualHooks: true }
     );
-    const response = new ApiResponse(200, "student updated successfully");
+    const response = new ApiResponse(
+      200,
+      "student updated successfully",
+      updated[0]
+    );
     return res.status(response.statusCode).json(response);
   } catch (error) {
-    throw new ApiError(500, `Failed to update student: ${error.message}`);
+    const response = new ApiResponse(
+      500,
+      `Failed to update student: ${error.message}`
+    );
+    return res.status(response.statusCode).json(response);
   }
 };
 

@@ -42,6 +42,16 @@ export default {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
+      },
     });
   },
 
