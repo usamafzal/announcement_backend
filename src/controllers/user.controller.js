@@ -1,7 +1,7 @@
 import {
   AuthValidation,
   Loginvalidate,
-} from "../utils/auth_validate/auth_validate.js";
+} from "../utils/validation/auth_validate.js";
 import ApiResponse from "../utils/api_response/api_response.js";
 import { UserModel } from "../models/user.model.js";
 import { Op } from "sequelize";

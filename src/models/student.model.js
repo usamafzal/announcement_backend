@@ -50,5 +50,10 @@ export const studentModel = ConfigDB.define(
         }
       },
     },
+    indexes: [
+      {
+        fields: ["userId"],
+      },
+    ],
   }
 );
