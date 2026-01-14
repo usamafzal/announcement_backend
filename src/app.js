@@ -6,6 +6,7 @@ import userRouter from "./routes/user.routes.js";
 import { studentRouter } from "./routes/student.route.js";
 import IsUserLoggedIn from "./middleware/auth.middleware.js";
 import programRouter from "./routes/program.route.js";
+import semesterRouter from "./routes/semester.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,6 +33,10 @@ app.use("/api/student", studentRouter);
 
 // program Router
 app.use("/api/program", IsUserLoggedIn, programRouter);
+
+// semseter router
+app.use("/api/semester", IsUserLoggedIn, semesterRouter);
+
 // Server Start
 app.listen(PORT, process.env.URI, (err) =>
   err

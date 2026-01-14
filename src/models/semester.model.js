@@ -22,10 +22,6 @@ export const semesterModel = ConfigDB.define(
       allowNull: false,
       unique: true,
     },
-    isFinal: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
   },
   {
     tableName: "semesters",
