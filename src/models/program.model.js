@@ -18,7 +18,10 @@ export const programModel = ConfigDB.define(
         this.setDataValue("name", value.toUpperCase());
       },
     },
-    durationSemesters: DataTypes.INTEGER,
+    durationSemesters: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     tableName: "programs",
