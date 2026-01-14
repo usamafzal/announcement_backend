@@ -18,8 +18,11 @@ const allPrograms = async (req, res) => {
 const createProgram = async (req, res) => {
   try {
     const { name, durationSemesters } = req.body;
-    if (!name) {
-      const response = new ApiResponse(400, "name is required");
+    if (!name || !durationSemesters) {
+      const response = new ApiResponse(
+        400,
+        "name & durationSemesters is required"
+      );
       return res.status(response.statusCode).json(response);
     }
     const existProgram = await programModel.findOne({ where: { name } });
