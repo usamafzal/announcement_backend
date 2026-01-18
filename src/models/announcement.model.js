@@ -10,8 +10,14 @@ export const announcementModel = ConfigDB.define(
       allowNull: false,
       primaryKey: true,
     },
-    title: DataTypes.STRING,
-    message: DataTypes.TEXT,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    message: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
