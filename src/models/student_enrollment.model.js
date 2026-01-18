@@ -23,10 +23,6 @@ export const studentEnrollment = ConfigDB.define(
       type: DataTypes.UUID,
       allowNull: false,
     },
-    classId: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
     startDate: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

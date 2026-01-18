@@ -1,5 +1,5 @@
-import { announcementModel } from "./announcement.model";
-import { announcementTarget } from "./announcement_target.model";
+import { announcementModel } from "./announcement.model.js";
+import { announcementTarget } from "./announcement_target.model.js";
 import applyAssociations from "./associations.js";
 import { classModel } from "./class.model.js";
 import { programModel } from "./program.model.js";
@@ -9,7 +9,7 @@ import { studentDevice } from "./student_device.model.js";
 import { studentEnrollment } from "./student_enrollment.model.js";
 import { UserModel } from "./user.model.js";
 
-const models = [
+const models = {
   studentModel,
   classModel,
   semesterModel,
@@ -19,7 +19,7 @@ const models = [
   studentEnrollment,
   studentDevice,
   UserModel,
-];
+};
 
 applyAssociations(models);
 
