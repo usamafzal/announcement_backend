@@ -11,6 +11,8 @@ import studentEnrollment from "./routes/student_enrollment.route.js";
 import announcementRouter from "./routes/announcement.route.js";
 import announcementTarget from "./routes/announcement_target.route.js";
 import models from "./models/index.js";
+import studentAnnouncementsRouter from "./routes/student_announcements.route.js";
+import { isStudentLoggedIn } from "./middleware/student.middleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -49,6 +51,9 @@ app.use("/api/announcement", IsUserLoggedIn, announcementRouter);
 
 // announcements Targets
 app.use("/api/announcement_target", IsUserLoggedIn, announcementTarget);
+
+// get students announcements
+app.use("/api/stu_ann", isStudentLoggedIn, studentAnnouncementsRouter);
 
 // Server Start
 app.listen(PORT, process.env.URI, (err) =>
