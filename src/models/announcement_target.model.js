@@ -13,7 +13,6 @@ export const announcementTarget = ConfigDB.define(
       type: DataTypes.UUID,
       allowNull: false,
     },
-
     programId: {
       type: DataTypes.UUID,
       allowNull: true,
@@ -22,10 +21,7 @@ export const announcementTarget = ConfigDB.define(
       type: DataTypes.UUID,
       allowNull: true,
     },
-    classId: {
-      type: DataTypes.UUID,
-      allowNull: true,
-    },
+
     semesterId: {
       type: DataTypes.UUID,
       allowNull: true,

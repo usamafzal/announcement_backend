@@ -9,6 +9,8 @@ import programRouter from "./routes/program.route.js";
 import semesterRouter from "./routes/semester.route.js";
 import studentEnrollment from "./routes/student_enrollment.route.js";
 import announcementRouter from "./routes/announcement.route.js";
+import announcementTarget from "./routes/announcement_target.route.js";
+import models from "./models/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -44,6 +46,9 @@ app.use("/api/student-enrollment", IsUserLoggedIn, studentEnrollment);
 
 // announcements
 app.use("/api/announcement", IsUserLoggedIn, announcementRouter);
+
+// announcements Targets
+app.use("/api/announcement_target", IsUserLoggedIn, announcementTarget);
 
 // Server Start
 app.listen(PORT, process.env.URI, (err) =>

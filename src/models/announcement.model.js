@@ -5,7 +5,7 @@ export const announcementModel = ConfigDB.define(
   "Announcement",
   {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,

@@ -64,10 +64,6 @@ export default function applyAssociations(models) {
     onUpdate: "CASCADE",
   });
 
-  models.announcementTarget.belongsTo(models.announcementModel, {
-    foreignKey: { name: "announcementId", allowNull: false },
-  });
-
   /* =========================
      ANNOUNCEMENT TARGET LINKS
   ========================== */
@@ -88,5 +84,28 @@ export default function applyAssociations(models) {
     foreignKey: { name: "studentId", allowNull: true },
     onDelete: "SET NULL",
     onUpdate: "CASCADE",
+  });
+
+  models.announcementTarget.belongsTo(models.announcementModel, {
+    foreignKey: { name: "announcementId" },
+    as: "announcements", // Singular, because one target row = one announcement
+  });
+
+  // 2. Link AnnouncementTarget to Semester
+  models.announcementTarget.belongsTo(models.semesterModel, {
+    foreignKey: { name: "semesterId" },
+    as: "semesters",
+  });
+
+  // 3. Link AnnouncementTarget to Program
+  models.announcementTarget.belongsTo(models.programModel, {
+    foreignKey: { name: "programId" },
+    as: "programs",
+  });
+
+  // 4. Link AnnouncementTarget to Student
+  models.announcementTarget.belongsTo(models.studentModel, {
+    foreignKey: { name: "studentId" },
+    as: "students",
   });
 }
